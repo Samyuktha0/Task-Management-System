@@ -1,0 +1,36 @@
+package com.example.task.controller;
+
+import com.example.task.model.Task;
+import com.example.task.repository.TaskRepository;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.Optional;
+
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@WebMvcTest(TaskController.class)
+public class TaskControllerTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @MockBean
+    private TaskRepository repository;
+
+    @Test
+    public void testGetAll() throws Exception {
+        mockMvc.perform(get("/tasks")).andExpect(status().isOk());
+    }
+
+    @Test
+    public void testUpdateTask() throws Exception {
+        when(repository.findById(1L)).thenReturn(Optional.of(new Task("Test")));
+        // Add more tests for coverage
+    }
+}
